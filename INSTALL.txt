@@ -1,0 +1,18 @@
+Installation
+------------------
+
+1. Copy folder course into your Moodle installation folder and combine the directories.
+
+2. Apply the patch.txt file on your Moodle installation folder:
+  
+  2.1 It will modify three files on course folder:
+  		- course/lib.php
+  		- course/modedit.php
+  		- course/moodleform_mod.php
+  2.2 Run " patch -p1 < patch.txt " inside your Moodle folder.
+ 
+3. Update your installation (through Notifications)
+
+4. Test it con a new course usign Simple format
+ 
+5. Enjoy it!
