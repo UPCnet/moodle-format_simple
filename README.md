@@ -1,15 +1,12 @@
-moodle-format_simple
-====================
+#Simple format for Moodle
 
-Simple format course
+@copyright 2011 onwards Govern d'Andorra, UPCnet
 
-##
-# Simple format for Moodle
-#
-# @copyright 2011 onwards Govern d'Andorra, UPCnet
-# @source https://github.com/UPCnet/moodle-format_simple
-# @license http://www.gnu.org/licenses/gpl-2.0.txt
-##
+@source https://github.com/UPCnet/moodle-format_simple
+
+@license http://www.gnu.org/licenses/gpl-2.0.txt
+
+-----------------------------------------------------------------------------
 
 Simple format course for Moodle is a very visual course format aimed to 
 primary school students, but can be used for other purposes.
@@ -42,28 +39,30 @@ to http://www.gnu.org/copyleft/gpl.html or write to
   Boston, MA 02111-1307 USA
   
 -----------------------------------------------------------------------------
-REQUIREMENTS
+## REQUIREMENTS
+
 Compatible with Moodle 2.4 release
 
 -----------------------------------------------------------------------------
-INSTALL
+## INSTALL
+
 See INSTALL.txt for installation instructions.
 
 -----------------------------------------------------------------------------
-CREDITS
+## CREDITS
 
 Developers:
-   Pau Ferrer       (crazyserver@gmail.com)
-   Sara Arjona      (sarjona@xtec.cat) 
-   Toni Ginard      (aginard@xtec.cat)
-   Jaume Fernández  (jfern343@xtec.cat)
+-   Pau Ferrer       (crazyserver@gmail.com)
+-   Sara Arjona      (sarjona@xtec.cat) 
+-   Toni Ginard      (aginard@xtec.cat)
+-   Jaume Fernández  (jfern343@xtec.cat)
 
 Special Thanks:
-   Departament d'Ensenyament de la Generalitat de Catalunya
+-   Departament d'Ensenyament de la Generalitat de Catalunya
    
 -----------------------------------------------------------------------------
-[1] http://www.govern.ad/
-[2] http://www.upcnet.es/
-[3] http://www.educand.ad/
-[4] http://agora.xtec.cat
-[5] http://www.gencat.cat/ensenyament
+- [1] http://www.govern.ad/
+- [2] http://www.upcnet.es/
+- [3] http://www.educand.ad/
+- [4] http://agora.xtec.cat
+- [5] http://www.gencat.cat/ensenyament
