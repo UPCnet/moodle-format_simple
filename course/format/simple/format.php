@@ -20,8 +20,8 @@
  * This format is based on "topics" format from Moodle 2.4
  *
  * @package format_simple
- * @copyright 2012 UPCnet
- * @author Pau Ferrer Ocaña pau.ferrer-ocana@upcnet.es, Jaume Fernàndez Valiente jfern343@xtec.cat
+ * @copyright 2012-2014 UPCnet
+ * @author Pau Ferrer Ocaña pau.ferrer-ocana@upcnet.es, Jaume Fernàndez Valiente jfern343@xtec.cat, Marc Espinosa Zamora marc.espinosa.zamora@upcnet.es
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -50,7 +50,7 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 $course = course_get_format($course)->get_course();
 course_create_sections_if_missing($course, range(0, $course->numsections));
 
-//$is_teacher = has_capability('moodle/course:setcurrentsection', $context);
+//$is_teacher = has_capability('moodle/c?paourse:setcurrentsection', $context);
 if ($PAGE->user_is_editing()) {
     $alt_format = 'topics';
     include($CFG->dirroot . '/course/format/' . $alt_format . '/format.php');
@@ -61,19 +61,19 @@ require_once($CFG->dirroot . '/course/format/simple/lib.php');
 
 $renderer = $PAGE->get_renderer('format_simple');
 
-//XTEC ************ AFEGIT - To show current section if none is selected
-//2012.08.20  @sarjona
-if ($course->coursedisplay == COURSE_DISPLAY_MULTIPAGE){
-    $notifyeditingon = optional_param('notifyeditingon', -1, PARAM_BOOL);
-    if ($edit < 0 && $notifyeditingon < 0 && empty($displaysection)) {
-        $displaysection = $course->marker;
-    } else if ($displaysection == -1){
+$notifyeditingon = optional_param('notifyeditingon', -1, PARAM_BOOL);
+if ($edit < 0 && $notifyeditingon < 0 && empty($displaysection)) {
+	$displaysection = $course->marker;
+} else if ($displaysection == -1){
         $displaysection = 0;
-    }
 }
-//************ FI                    
 
-if (!empty($displaysection)) {
+$isstudent = !has_capability('moodle/course:update',$context);
+$section =  optional_param('section',0,PARAM_INT);
+
+if (($notifyeditingon < 0 && $isstudent) || !empty($section)) {
+    //if (empty($displaysection)) $course->showtopiczero = true;
+    $displaysection = !empty($displaysection)?$displaysection:1;
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {
     $renderer->print_multiple_section_page($course, null, null, null, null);

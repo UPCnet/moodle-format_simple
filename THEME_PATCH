@@ -1,0 +1,11 @@
+For the "Show Blocks" options to work you have to add this code to your theme course layout:
+
+$context = context_course::instance($COURSE->id);
+$isstudent = !has_capability('moodle/course:update',$context);
+
+$format_options = course_get_format($COURSE)->get_format_options();
+
+//Those variables define if the side-pre and side-post blocks should be visible or not
+$hassidepre = $PAGE->blocks->region_has_content('side-pre', $OUTPUT)&&($COURSE->format != 'simple' || !$isstudent || ($COURSE->format == 'simple' && !empty($format_options['showblocks'])));
+$hassidepost = $PAGE->blocks->region_has_content('side-post', $OUTPUT)&&($COURSE->format != 'simple' || !$isstudent || ($COURSE->format == 'simple' && !empty($format_options['showblocks'])));
+
