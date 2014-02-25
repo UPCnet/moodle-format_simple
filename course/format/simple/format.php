@@ -50,7 +50,7 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 $course = course_get_format($course)->get_course();
 course_create_sections_if_missing($course, range(0, $course->numsections));
 
-//$is_teacher = has_capability('moodle/c?paourse:setcurrentsection', $context);
+//$is_teacher = has_capability('moodle/course:setcurrentsection', $context);
 if ($PAGE->user_is_editing()) {
     $alt_format = 'topics';
     include($CFG->dirroot . '/course/format/' . $alt_format . '/format.php');
