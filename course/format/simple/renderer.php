@@ -223,7 +223,6 @@ class format_simple_renderer extends format_topics_renderer {
 
 					// resize mimetype icons to a proper size
 					$iconurl = simple_get_icon_url($mod, $modnumber);
-					//echo $iconurl;
 					$pattern = '/f\/[a-zA-Z0-9]*-(\d+)\D*$/';
 					preg_match($pattern, $iconurl, $matches);
 					$iconsize = !empty($course->simpleiconsize)?$course->simpleiconsize:self::DEFAULTICONSIZE;
