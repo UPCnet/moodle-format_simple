@@ -65,16 +65,15 @@ if ($course->coursedisplay == COURSE_DISPLAY_MULTIPAGE){
     if (empty($displaysection)) {
         $displaysection = $course->marker;
     } else if ($displaysection == -1){
+        $displaysection = false;
+    } else {
         $displaysection = 0;
     }
-} else {
-    $displaysection = false;
 }
 
-$section = optional_param('section', $displaysection, PARAM_INT);
-if ($section !== false) {
-    $course->hiddensections = false;
-    $renderer->print_single_section_page($course, null, null, null, null, $section);
+if ($displaysection !== false) {
+    //$course->hiddensections = false;
+    $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {
     $renderer->print_multiple_section_page($course, null, null, null, null);
 }
