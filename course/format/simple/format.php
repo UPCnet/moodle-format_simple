@@ -19,7 +19,8 @@
  * Simple Topics course format.  Display the whole course as "Simple blocks" made of modules.
  * This format is based on "topics" format from Moodle 2.4
  *
- * @package format_simple
+ * @package    course/format
+ * @subpackage Simple
  * @copyright 2012-2014 UPCnet
  * @author Pau Ferrer Ocaña pau.ferrer-ocana@upcnet.es, Jaume Fernàndez Valiente jfern343@xtec.cat, Marc Espinosa Zamora marc.espinosa.zamora@upcnet.es
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -71,9 +72,10 @@ if ($course->coursedisplay == COURSE_DISPLAY_MULTIPAGE){
     }
 }
 
-if ($displaysection !== false) {
+$section = optional_param('section', $displaysection, PARAM_INT);
+if ($section !== false) {
     //$course->hiddensections = false;
-    $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
+    $renderer->print_single_section_page($course, null, null, null, null, $section);
 } else {
     $renderer->print_multiple_section_page($course, null, null, null, null);
 }

@@ -54,18 +54,18 @@ class format_simple extends format_topics {
         	            'default' => $courseconfig->coursedisplay,
                 	    'type' => PARAM_INT,
 	                ),
-			'showtopiczero' => array(
-                            'default' => 0,
-                            'type' => PARAM_INT,
-                        ),
-			'showblocks' => array(
-                            'default' => 0,
-                            'type' => PARAM_INT,
-                        ),
-			'simpleiconsize' => array(
-                            'default' => 128,
-                            'type' => PARAM_INT,
-                        ),
+					'showtopiczero' => array(
+                        'default' => 0,
+                        'type' => PARAM_INT,
+		            ),
+					'showblocks' => array(
+                        'default' => 0,
+                        'type' => PARAM_INT,
+                    ),
+					'simpleiconsize' => array(
+                        'default' => 128,
+                        'type' => PARAM_INT,
+                    )
         	    );
 	        }
         	if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -201,9 +201,7 @@ function format_simple_pluginfile($course, $cm, $context, $filearea, $args, $for
     send_stored_file($file, 86400, $filter, $forcedownload);
 }
 
-function simple_get_current_icon_url($modname, $instanceid){
-	global $CFG, $COURSE;
-
+function simple_get_current_icon($modname, $instanceid){
 	$context = context_module::instance($instanceid,IGNORE_MISSING);
 	if($context){
 		// Get file
@@ -213,18 +211,25 @@ function simple_get_current_icon_url($modname, $instanceid){
 		$files = $fs->get_area_files($context->id, $component, $filearea, 0, "sortorder, itemid, filepath, filename", false);
 		if(!empty($files)){
 			$file = array_pop($files);
-			$url = "{$CFG->wwwroot}/pluginfile.php/{$file->get_contextid()}/$component/$filearea";
-			return $url.$file->get_filepath().$file->get_itemid().'/'.$file->get_filename();
+			return $file;
 		}
+	}
+	return false;
+}
+
+function simple_get_current_icon_url($modname, $instanceid){
+	global $CFG;
+	if($file = simple_get_current_icon($modname, $instanceid)){
+		$url = "{$CFG->wwwroot}/pluginfile.php/{$file->get_contextid()}/format_simple/bigicon";
+		return $url.$file->get_filepath().$file->get_itemid().'/'.$file->get_filename();
 	}
 	return false;
 }
 
 //Retorna la url de la icona
 function simple_get_icon_url($mod, $instanceid = false){
-	if($instanceid){
-		$icon = simple_get_current_icon_url($mod->modname, $instanceid);
-		if($icon) return $icon;
+	if($instanceid && $icon = simple_get_current_icon_url($mod->modname, $instanceid)){
+		return $icon;
 	}
 	return simple_get_default_icon_url($mod);
 }
