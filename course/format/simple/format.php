@@ -70,6 +70,8 @@ if ($course->coursedisplay == COURSE_DISPLAY_MULTIPAGE){
     } else {
         $displaysection = 0;
     }
+} else {
+    $displaysection = false;
 }
 
 $section = optional_param('section', $displaysection, PARAM_INT);
