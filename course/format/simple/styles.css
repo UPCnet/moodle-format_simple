@@ -13,9 +13,8 @@
 .course-content ul.simple {margin:0;}
 .course-content ul.simple li.section {
 	list-style: none;
-	margin:5px 0 0 0;
+	margin: 5px 0 0 0;
 	padding:0;
-	border: #DDD 1px solid;
 }
 .course-content ul.simple li.section .content {margin:0 40px;}
 .course-content ul.simple li.section .left {width:40px;float:left;text-align:center;}
@@ -68,7 +67,7 @@
 }
 
 .simple-mod-list li {
-    float: none!important;
+    float: none !important;
     display: inline-block;
 }
 
