@@ -246,11 +246,15 @@ class format_simple_renderer extends format_topics_renderer {
 	            }
 
 				$modcontext = context_module::instance($mod->id);
-
+				
+				$iconsize = !empty($course->simpleiconsize)?$course->simpleiconsize:self::DEFAULTICONSIZE;
+				
 				$liclasses = array();
 				$liclasses[] = 'activity';
 				$liclasses[] = $mod->modname;
 				$liclasses[] = 'modtype_'.$mod->modname;
+				$liclasses[] = 'size_'.$iconsize;
+				
 				$extraclasses = $mod->get_extra_classes();
 				if ($extraclasses) {
 					$liclasses = array_merge($liclasses, explode(' ', $extraclasses));
@@ -297,13 +301,12 @@ class format_simple_renderer extends format_topics_renderer {
 					$iconurl = simple_get_icon_url($mod, $modnumber);
 					$pattern = '/f\/[a-zA-Z0-9]*-(\d+)\D*$/';
 					preg_match($pattern, $iconurl, $matches);
-					$iconsize = !empty($course->simpleiconsize)?$course->simpleiconsize:self::DEFAULTICONSIZE;
 					if ($matches) {
 						$baseiconurl = str_replace($matches[0],'',$iconurl);
 						$relativeiconurl = str_replace($matches[1],$iconsize,$matches[0]);
 						$iconurl = $baseiconurl.$relativeiconurl;
 					}
-					$html = '<div style="background-image: url(\''.$iconurl.'\'); background-size: contain; background-position: center; background-repeat: no-repeat; width: '.$iconsize.'px; height: '.$iconsize.'px; display: block;"></div>';
+					$html = '<div class="simple_image" style="background-image: url(\''.$iconurl.'\');"></div>';
 					$activitylink = $html .html_writer::start_tag('div').
 						html_writer::tag('span', $instancename . $altname, array('class' => 'instancename'))
 						.html_writer::end_tag('div');
