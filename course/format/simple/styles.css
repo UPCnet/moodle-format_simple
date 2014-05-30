@@ -57,6 +57,7 @@
 	display: block;
 	margin-bottom: 3px;
 	width: 100%;
+	min-width: 128px;
 }
 
 .course-content ul.simple .activity.size_24 .simple_image{
@@ -92,6 +93,7 @@
 }
 
 .course-content ul.simple .activity.size_256 .simple_image{
+	min-width: 256px;
 	height: 256px;
 }
 
