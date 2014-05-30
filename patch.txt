@@ -1,65 +1,37 @@
-diff -Naur original/course/lib.php patched/course/lib.php
---- original/course/lib.php	2013-09-26 11:29:25.000000000 +0200
-+++ patched/course/lib.php	2013-09-26 11:31:53.109445691 +0200
-@@ -2974,6 +2974,10 @@
-     $DB->delete_records('course_completion_criteria', array('moduleinstance' => $cm->id,
-                                                             'criteriatype' => COMPLETION_CRITERIA_TYPE_ACTIVITY));
+diff -Naur moodle/course/modlib.php moodle_simple/course/modlib.php
+--- moodle/course/modlib.php	2014-05-12 11:47:54.228724474 +0200
++++ moodle_simple/course/modlib.php	2014-05-30 13:53:14.496377613 +0200
+@@ -174,6 +174,12 @@
+     $hasgrades = plugin_supports('mod', $moduleinfo->modulename, FEATURE_GRADE_HAS_GRADE, false);
+     $hasoutcomes = plugin_supports('mod', $moduleinfo->modulename, FEATURE_GRADE_OUTCOMES, true);
  
-+	//Deletes simple images if exists
-+	require_once($CFG->dirroot.'/course/format/simple/lib.php');
-+	simple_delete_module_image($id);                                                       
++	// Adds icon to filesystem
++	if(isset($moduleinfo->simple_image)){
++		require_once($CFG->dirroot.'/course/format/simple/lib.php');
++		simple_update_module_image($moduleinfo);
++	}
 +
-     delete_context(CONTEXT_MODULE, $cm->id);
-     $DB->delete_records('course_modules', array('id'=>$cm->id));
-     rebuild_course_cache($cm->course, true);
-diff -Naur original/course/modedit.php patched/course/modedit.php
---- original/course/modedit.php	2013-09-26 11:29:25.000000000 +0200
-+++ patched/course/modedit.php	2013-09-26 11:33:32.873940404 +0200
-@@ -388,6 +388,12 @@
-             $completion->reset_all_state($cm);
-         }
- 
-+		//Updates icon on file system
-+		if(isset($fromform->simple_image)){
-+			require_once($CFG->dirroot.'/course/format/simple/lib.php');
-+			simple_update_module_image($fromform);
-+		}
-+
-         $eventname = 'mod_updated';
- 
-         add_to_log($course->id, "course", "update mod",
-@@ -492,6 +498,12 @@
-             condition_info::update_cm_from_form((object)array('id'=>$fromform->coursemodule), $fromform, false);
-         }
- 
-+		//Adds icon to filesystem
-+		if(isset($fromform->simple_image)){
-+			require_once($CFG->dirroot.'/course/format/simple/lib.php');
-+			simple_add_module_image($fromform);
-+		}
-+
-         $eventname = 'mod_created';
- 
-         add_to_log($course->id, "course", "add mod",
-diff -Naur original/course/moodleform_mod.php patched/course/moodleform_mod.php
---- original/course/moodleform_mod.php	2013-09-26 11:29:25.000000000 +0200
-+++ patched/course/moodleform_mod.php	2013-09-26 11:34:28.442215969 +0200
-@@ -687,6 +687,19 @@
+     // Sync idnumber with grade_item.
+     if ($hasgrades && $grade_item = grade_item::fetch(array('itemtype'=>'mod', 'itemmodule'=>$moduleinfo->modulename,
+                  'iteminstance'=>$moduleinfo->instance, 'itemnumber'=>0, 'courseid'=>$course->id))) {
+diff -Naur moodle/course/moodleform_mod.php moodle_simple/course/moodleform_mod.php
+--- moodle/course/moodleform_mod.php	2014-05-12 11:47:54.228724474 +0200
++++ moodle_simple/course/moodleform_mod.php	2014-05-30 13:53:21.392411807 +0200
+@@ -711,6 +711,18 @@
              $mform->disabledIf('completionexpected', 'completion', 'eq', COMPLETION_TRACKING_NONE);
          }
  
-+		//Adding simple related form elements to coursemodule form
-+      	if($COURSE->format == 'simple'){
-+       		require_once($CFG->dirroot.'/course/format/simple/lib.php');
-+       		if (empty($this->_cm)) {
-+				$cm = new StdClass();
-+				$cm->course = $COURSE->id;
-+				$cm->modname = $this->_modname;
-+				simple_coursemodule_elements($this->_form, $cm);
-+			} else {
-+				simple_coursemodule_elements($this->_form, $this->_cm);
-+			}
-+		}                                                     
++        if($COURSE->format == 'simple'){
++            require_once($CFG->dirroot.'/course/format/simple/lib.php');
++            if (empty($this->_cm)) {
++                $cm = new StdClass();
++                $cm->course = $COURSE->id;
++                $cm->modname = $this->_modname;
++                simple_coursemodule_elements($this->_form, $cm);
++            } else {
++                simple_coursemodule_elements($this->_form, $this->_cm);
++            }
++        }
 +
          $this->standard_hidden_coursemodule_elements();
      }
