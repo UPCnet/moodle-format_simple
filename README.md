@@ -41,7 +41,7 @@ to http://www.gnu.org/copyleft/gpl.html or write to
 -----------------------------------------------------------------------------
 ## REQUIREMENTS
 
-Compatible with Moodle 2.4 release
+Compatible with Moodle 2.8 release
 
 -----------------------------------------------------------------------------
 ## INSTALL
